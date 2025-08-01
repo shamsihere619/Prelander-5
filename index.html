@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You're Invited</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #ffe0ec, #e0f7fa);
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+      color: #1f2937;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      color: #3b0764;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 520px;
+      margin: auto;
+      padding: 30px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .badge {
+      background-color: #8b5cf6;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn {
+      display: none;
+      margin-top: 25px;
+      padding: 14px 32px;
+      background-color: #d97706;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #b45309;
+    }
+    #geoMessage, #countdown, #warning {
+      margin-top: 15px;
+    }
+    #warning {
+      color: #dc2626;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">Special Access</div>
+    <h1>Claim Your Exclusive Reward</h1>
+    <div id="geoMessage">Detecting your location...</div>
+    <div id="countdown">Please wait <span id="timer">4</span> seconds...</div>
+    <a id="continueBtn" href="https://otieu.com/4/9647803" target="_blank">
+      <button class="btn">✨ Reveal Reward</button>
+    </a>
+    <div id="warning">Access Denied: Unusual behavior detected.</div>
+  </div>
+
+  <!-- Optional BeMob Tracking -->
+  <img src="https://wcyhr.bemobtrcks.com/go/36539d0e-85b4-47d3-93f1-24c74d4d9263" width="1" height="1" style="display:none;" />
+
+  <script>
+    // Geo
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("geoMessage").textContent = "Reward available for " + data.country_name + " residents!";
+      })
+      .catch(() => {
+        document.getElementById("geoMessage").textContent = "Welcome!";
+      });
+
+    // Bot detection
+    const isBot = /bot|crawl|spider|headless|phantom/i.test(navigator.userAgent.toLowerCase()) || navigator.webdriver;
+
+    if (isBot) {
+      document.getElementById("geoMessage").style.display = "none";
+      document.getElementById("countdown").style.display = "none";
+      document.getElementById("warning").style.display = "block";
+    } else {
+      let seconds = 4;
+      const timer = document.getElementById("timer");
+      const button = document.querySelector(".btn");
+
+      const interval = setInterval(() => {
+        seconds--;
+        timer.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          document.getElementById("countdown").style.display = "none";
+          button.style.display = "inline-block";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
